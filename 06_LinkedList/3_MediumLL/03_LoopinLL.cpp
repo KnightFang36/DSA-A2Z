@@ -77,6 +77,52 @@ bool  DetectLoop(Node* head){
     
 }
 
+Node* StartPointOfLoop(Node* head){
+    Node* slow=head;
+    Node* fast=head;
+    while(fast!=NULL && fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+
+            if(slow==fast){
+                slow=head;
+                while(slow!=fast){
+                    slow=slow->next;
+                    fast=fast->next;
+                }
+                return slow; //starting point
+            }
+    }
+    return NULL;
+
+}
+int loopLength(Node* slow,Node* fast){
+    int cnt=1;
+    fast=fast->next;
+    while(slow!=fast){
+        cnt++;
+        fast=fast->next;
+    }
+    return cnt;
+    
+}
+
+
+int findloopLength(Node* head){
+    Node* slow=head;
+    Node* fast=head;
+
+    while(fast!=NULL && fast->next!=NULL){
+        slow=slow->next;
+        fast=fast->next->next;
+
+        if(slow==fast) return loopLength(slow,fast);
+    }
+    return 0;
+}
+
+
+
 
 int main(){
     vector<int> arr={7,3,1,8,67,89,0,12,};
@@ -84,17 +130,10 @@ int main(){
     Node* head=convertToLL(arr);
     printLL(head);
 
-    createLoop(head,3);
+    createLoop(head,4);
 
-    cout<< DetectLoop(head);
+    cout<< findloopLength(head);
 
-    
-     
-
-    
-
-
-    
 
 }
 
